@@ -1,0 +1,27 @@
+{
+  "name": "crud-node",
+  "version": "1.0.0",
+  "description": "CRUD en Node.js",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CinthiaOrona2122/CAC-Crud_NodeJs.git"
+  },
+  "keywords": [
+    "crud",
+    "node",
+    "express"
+  ],
+  "author": "Cinthia M. Orona",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CinthiaOrona2122/CAC-Crud_NodeJs/issues"
+  },
+  "homepage": "https://github.com/CinthiaOrona2122/CAC-Crud_NodeJs#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
