@@ -1,0 +1,28 @@
+<!--View/Layout Donde creamos la configuracion de 'todo lo que se repite' en el main-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+
+<body>
+    <header>
+        <h1>Mi Sitio</h1>
+        <%- include('partials/nav') -%>
+    </header>
+
+    <main>
+        <%- body%>
+            <!--Hace referencia al index.ejs de './productos/' que configura el contenido-->
+    </main>
+
+    <footer>
+        Copyright &copy; 2022
+    </footer>
+</body>
+
+</html>
