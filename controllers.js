@@ -33,3 +33,7 @@ module.exports.show = (req, res) => {
     console.log(results)
   });
 }
+
+module.exports.edit = (req, res) => {
+  res.render('productos/edit');
+}
