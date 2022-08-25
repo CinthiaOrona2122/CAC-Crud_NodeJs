@@ -1,0 +1,79 @@
+<h1 class="mb-4">Listado de Productos</h1>
+
+<a href="/admin/productos/create" class="btn btn-success">Crear Producto</a>
+
+<table class="table" style="margin-top: 2em;">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Nombre de Productos</th>
+            <th>Descripcion</th>
+            <th>Categoria</th>
+            <th>Acceso a edición</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% productos.forEach(producto=> { %>
+            <tr>
+                <td>
+                    <%= producto.id%>
+                </td>
+                <td>
+                    <%= producto.nombre %>
+                </td>
+                <td>
+                    <%= producto.descripcion %>
+                </td>  
+                <td>
+                    <%= producto.categoria_id %>
+                </td>              
+                <td>
+                    <a href="/admin/productos/<%= producto.id%>" class="btn btn-primary">Ver</a>
+                    <a href="/admin/productos/<%= producto.id%>/edit" class="btn btn-warning">Editar</a>
+                    <form class="form-delete" data="<%= producto.id%>"
+                        action="/admin/productos/<%= producto.id%>/delete?_method=DELETE" method="post"
+                        style="display: inline-block;">
+                        <button type="submit" class="btn btn-danger">Borrar</button>
+                    </form>
+                </td>
+            </tr>
+            <% })%>
+    </tbody>
+</table>
+
+<!-- <div class="row">
+    <% productos.forEach(producto=> { %>
+        <div class="col-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= producto.nombre %>
+                    </h5>
+                    <p class="card-text">
+                        <%= producto.descripcion %>
+                    </p>
+                    <a href="/productos/<%= producto.id%>" class="btn btn-primary">Ver detalles</a>
+                    <a href="/productos/<%= producto.id%>/edit" class="btn btn-warning">Editar</a>
+                    <form class="form-delete" data="<%= producto.id%>"
+                        action="/productos/<%= producto.id%>/delete?_method=DELETE" method="post">
+                        <button type="submit" class="btn btn-danger">Borrar</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <% })%>
+</div> -->
+
+
+<script>
+    document.addEventListener('submit', event => { //evento submit del formulario
+        if (event.target.classList.contains('form-delete')) {
+            event.preventDefault(); //previene el comportamiento por defecto del formulario
+
+            if (confirm('¿Estas seguro de querer borrar este producto?')) {
+                event.target.submit(); //envia el formulario
+            }
+        }
+    });
+</script>
