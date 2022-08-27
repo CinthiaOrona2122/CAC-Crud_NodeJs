@@ -1,35 +1,46 @@
 const express = require('express');
 const router = express.Router();
-
-const { body, validationResult } = require('express-validator');
+const bcryptjs = require('bcryptjs');
 
 const connection = require('../db');
 
-router.get('/registro', [
-    body('email', 'El email es requerido y tiene que ser valido').exists().isEmail().normalizeEmail(),
-    body('password', 'El password es requerido y tiene que ser valido').exists().trim().notEmpty().escape().isLength({ min: 3 }),
-], (req, res) => {
-    const errors = validationResult(req);
-    // console.log(req.body, errors);
+router.get('/login', (req, res) => {
+    res.render('auth/login', { layout: 'layout-auth' });
+});
 
-    if (errors.isEmpty()) {
-        res.send("Enviando...");
-    } else {
-        res.render('auth/registro', { layout: 'layout-auth' }, {
-            values: req.body,
-            errors: errors.array()
-        });
-    }
+router.post('/login', (req, res) => {
+    connection.query('SELECT * FROM usuarios WHERE email = ?', [req.body.email], async (error, results) => {
+        if (error) { throw error }
+
+        if (results.length == 0 || !(await bcryptjs.compare(req.body.password, results[0].password))) {
+            res.send("El email y/o la contraseña son incorrectos");
+        } else {
+            req.session.user_id = results[0].id;
+            req.session.user_email = results[0].email;
+
+            res.redirect('/');
+        }
+    });
 })
 
-// CLASE 31 21:44 NO FUNCIONA LA PAGINA DE REGISTRO
+router.get('/registro', (req, res) => {
+    res.render('auth/registro', { layout: 'layout-auth' });
+})
 
-router.post('/registro', (req, res) => {
-    connection.query('INSERT INTO usuarios SET ?', { email: req.body.email, password: req.body.password }, error => {
+router.post('/registro', async (req, res) => {
+    const hash = await bcryptjs.hash(req.body.password, 8);  // 8 saltos
+
+    connection.query('INSERT INTO usuarios SET ?', { email: req.body.email, password: hash }, error => {
         if (error) throw error
         res.redirect('/');
-    })
+    });
 })
 
+router.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/');
+    });
+});
 
 module.exports = router;
+

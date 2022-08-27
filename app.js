@@ -15,13 +15,28 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: false})); //toma los datos que vienen del formulario
 //true = para forms largos
 app.use(methodOverride('_method'));
+const session = require('express-session');
 
+app.use(session({
+  secret: 'Ba16%3{e8gc#bn',
+  resave: false,
+  saveUninitialized: false
+}));
+
+const isLogin = (req, res, next) => {
+  if (!req.session.user_id){
+    res.redirect('/login');
+  }
+
+
+  next();
+}
 
 app.use(require("./routes/index"));
 app.use(require("./routes/productos"));
 app.use(require("./routes/contacto"));
 
-app.use('/admin',require("./routes/admin/productos"));
+app.use('/admin',isLogin ,require("./routes/admin/productos"));
 
 app.use(require('./routes/auth'));
 
