@@ -9,6 +9,7 @@
             <th>Nombre de Productos</th>
             <th>Descripcion</th>
             <th>Categoria</th>
+            <th>Imagen</th>
             <th>Acceso a edición</th>
         </tr>
     </thead>
@@ -26,7 +27,10 @@
                 </td>  
                 <td>
                     <%= producto.categoria_id %>
-                </td>              
+                </td>  
+                <td>
+                    <img width="100" height="auto" src="/uploads/producto_<%=producto.id%>.jpg" alt="<%= producto.nombre %>">
+                </td>            
                 <td>
                     <a href="/admin/productos/<%= producto.id%>" class="btn btn-primary">Ver</a>
                     <a href="/admin/productos/<%= producto.id%>/edit" class="btn btn-warning">Editar</a>
